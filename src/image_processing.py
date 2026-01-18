@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-image = cv2.imread(r"C:\Users\82102\Bootcamp1\sample.jpg")
+image = cv2.imread(r"C:\Bootcamp1\data\sample.jpg")
 
 if image is None:
     print("이미지를 불러올 수 없습니다.")
