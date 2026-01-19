@@ -1,19 +1,25 @@
-# Computer Vision Project - Week 2
+## #1주차 전처리 과정 및 피드백 반영
+1. **Red Filter 추출**: HSV 색 공간을 활용하여 이미지 내 특정 영역(빨간색) 필터링 수행
+2. **구조 최적화**: 멘토님 피드백에 따라 `src/`, `data/`, `docs/` 폴더로 리팩토링 진행
+3. **환경 격리**: `.gitignore` 설정을 통해 `__pycache__` 및 `.pytest_cache` 등 불필요한 파일 관리 제외
+4. **README**: 기존의 공백이었던 README에 기본적인 설명 추가
 
-## Project Overview
-이 프로젝트는 OpenCV를 활용하여 2D 이미지를 분석하고, 픽셀 단위의 데이터를 3D 좌표계로 변환하는 과정을 포함합니다. 1차 과제의 피드백을 반영하여 코드의 모듈화(함수화) 및 폴더 구조 최적화를 진행하였습니다.
+## #2주차 과정 설명 [구조 설계 및 3D 변환]
 
-## Folder Structure
-* **src/**: 이미지 전처리 로직 및 단위 테스트 코드 (`image_processing.py`, `image_preprocessing.py` `test_3d_processing.py`)
-* **data/**: 실습용 원본 이미지 파일 (`sample.jpg`)
+1. **이미지 불러오기**: `os.path` 상대 경로를 활용하여 `data/` 폴더 내 원본 이미지 로드
+2. **이미지 전처리 (핵심 로직)**: 
+   - Grayscale 변환을 통한 픽셀 밝기 정보 추출
+   - `cv2.applyColorMap`을 이용한 시각화용 **Depth Map** 생성
+3. **좌표 변환**: 
+   - `np.meshgrid`를 활용한 X, Y 평면 좌표 생성
+   - 픽셀 밝기 값을 Z축 데이터로 매핑하여 **3D 포인트 클라우드(X, Y, Z)** 데이터셋 구축
+4. **결과 저장 (Save Step)**: 
+   - **이미지 저장**: 생성된 Depth Map 결과를 `data/depth_result.jpg`로 저장
+   - **데이터 저장**: 추출된 3D 좌표셋을 수치 분석 및 학습용 `.npy` 파일로 보존
 
-## Key Features
-1. **Red Color Filtering**: HSV 색 공간을 활용한 특정 객체 추출
-2. **Depth Map Generation**: Grayscale 변환 후 `COLORMAP_JET`을 적용한 가상 깊이 맵 생성
-3. **3D Point Cloud Conversion (Advanced)**: 픽셀의 밝기 값을 Z축(Depth)으로 활용하여 (X, Y, Z) 좌표 데이터 생성
-4. **Unit Testing**: `pytest`를 통한 이미지 처리 함수의 안정성 검증 (Input 예외 처리 등)
+---
 
-##  How to Run
-### 1. Requirements
-```bash
-pip install numpy opencv-python pytest
+## 2D 이미지를 3D로 변환하는 알고리즘 결과
+
+- **핵심 결과**: `data` 폴더의 원본 이미지를 분석하여 Depth Map 생성 및 픽셀별 XYZ 좌표 추출 완료
+- **데이터 보존**: 시각화 결과(`jpg`)와 수치 데이터(`npy`)를 각각 저장하여 데이터 활용성 극대화

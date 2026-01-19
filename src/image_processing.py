@@ -30,6 +30,14 @@ if __name__ == "__main__":
         # 3D 좌표 생성
         points_3d = np.dstack((X, Y, Z))
         
+        # 결과 저장 로직
+        # 1. Depth Map 이미지를 파일로 저장 (.jpg)
+        save_img_path = os.path.join(current_dir, "..", "data", "depth_result.jpg")
+        cv2.imwrite(save_img_path, result)      
+        # 2. 3D 좌표 데이터를 Numpy 파일로 저장 (.npy)
+        save_npy_path = os.path.join(current_dir, "..", "data", "points_3d.npy")
+        np.save(save_npy_path, points_3d)
+
         print("-" * 30)
         print(f"Image Path: {path}")
         print(f"3D Data Generated! (Shape): {points_3d.shape}")
