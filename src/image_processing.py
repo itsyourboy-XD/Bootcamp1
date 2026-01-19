@@ -1,25 +1,45 @@
 import cv2
 import numpy as np
+import os
 
-image = cv2.imread(r"C:\Bootcamp1\data\sample.jpg")
+# generate_depth_map 함수 적용
+def generate_depth_map(image):
+    if image is None:
+        raise ValueError("No input image found.")
+    # 그레이스케일 변환
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    # 가상의 깊이 맵 적용
+    depth_map = cv2.applyColorMap(gray, cv2.COLORMAP_JET)
+    return depth_map, gray
 
-if image is None:
-    print("이미지를 불러올 수 없습니다.")
+# 이미지 로드
+if __name__ == "__main__":
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    path = os.path.join(current_dir, "..", "data", "sample.jpg")
 
-hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-
-lower_red1 = np.array([0, 120, 70])
-upper_red1 = np.array([10, 255, 255])
-lower_red2 = np.array([170, 120, 70])
-upper_red2 = np.array([180, 255, 255])
-
-mask1 = cv2.inRange(hsv, lower_red1, upper_red1)
-mask2 = cv2.inRange(hsv, lower_red2, upper_red2)
-mask = mask1 + mask2
-
-result = cv2.bitwise_and(image, image, mask=mask)
-
-cv2.imshow("Original", image)
-cv2.imshow("Red Filtered", result)
-cv2. waitKey(0)
-cv2. destroyAllWindows()
+    img = cv2.imread(path)
+    
+    if img is not None:
+        # Depth Map 
+        result, gray = generate_depth_map(img)
+        
+        h, w = result.shape[:2]
+        X, Y = np.meshgrid(np.arange(w), np.arange(h))
+        Z = gray.astype(np.float32) 
+        
+        # 3D 좌표 생성
+        points_3d = np.dstack((X, Y, Z))
+        
+        print("-" * 30)
+        print(f"Image Path: {path}")
+        print(f"3D Data Generated! (Shape): {points_3d.shape}")
+        print(f"3D Coordinate of the First Pixel (X, Y, Z): {points_3d[0, 0]}")
+        print("-" * 30)
+        
+        # 결과 출력
+        cv2.imshow('Original', img)
+        cv2.imshow('Depth Map Result', result)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+    else:
+        print(f"Cannot find the image. Check the path: {os.path.abspath(path)}")
