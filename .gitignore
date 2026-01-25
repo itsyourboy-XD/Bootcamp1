@@ -1,3 +1,11 @@
 __pycache__/
 *.pyc
 .pytest_cache/
+# --- AI-model_OpenCV 프로젝트 ---
+**/datasets/
+**/runs/
+**/*.pt
+**/*.cache
+# 개별 결과 이미지
+**/final_result.jpg
+**/detection_result.jpg
