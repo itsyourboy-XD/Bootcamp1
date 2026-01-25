@@ -14,7 +14,7 @@
 
 본 프로젝트는 YOLOv8 모델을 활용하여 이미지 내 객체를 탐지하고, OpenCV를 통해 시각화 결과를 도출하는 것을 목적으로 합니다.
 
-### 1. 준비물 및 환경 설정
+### 1. 환경 설정
 * **라이브러리**: `ultralytics`, `opencv-python`, `datasets`, `torch`
 * **데이터셋**: Hugging Face `Food101` 샘플 이미지 (100장)
 * **사전 학습 모델**: `yolov8n.pt` (YOLOv8 Nano 모델)
@@ -24,3 +24,6 @@
 2. **모델 학습**: 최상위 폴더에서 아래 명령어를 실행하여 학습을 진행합니다.
    ```bash
    python AI-model_OpenCV/src/train_model.py
+3. **결과 확인**: 학습이 끝나면 bash에서 경로를 확인하고 best.pt 파일을 찾아 아래 명령어를 실행합니다.
+   ```bash
+   python AI-model_OpenCV/src/detect.py
