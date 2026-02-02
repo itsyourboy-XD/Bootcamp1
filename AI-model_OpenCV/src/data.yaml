@@ -1,0 +1,8 @@
+# 상대 경로 설정 (src 폴더 기준 한 단계 위)
+train: ../datasets/train/images
+val: ../datasets/valid/images
+test: ../datasets/test/images
+
+# 클래스 개수 및 이름
+nc: 3
+names: ['donut', 'cake', 'pizza']
